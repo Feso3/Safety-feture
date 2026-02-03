@@ -12,6 +12,7 @@ This document captures the phased development plan derived from the technical sp
 - Extend input support beyond plain text/markdown.
 - Improve extraction fidelity while preserving offsets and contextual metadata.
 - Introduce additional scanners aligned with newly supported formats.
+- Implement HTML extraction and hidden-text HTML detection.
 
 ## Phase 3: Usability & Operator Experience
 - Refine CLI ergonomics, reporting clarity, and actionable remediation guidance.

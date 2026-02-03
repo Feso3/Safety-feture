@@ -10,7 +10,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     scan_parser = subparsers.add_parser("scan", help="Scan a file for prompt-injection signals")
-    scan_parser.add_argument("path", type=Path, help="Path to .txt or .md file")
+    scan_parser.add_argument("path", type=Path, help="Path to .txt, .md, or .html file")
     scan_parser.add_argument(
         "--format",
         choices=["json", "md", "both"],

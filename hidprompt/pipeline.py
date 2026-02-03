@@ -2,16 +2,18 @@ import uuid
 from pathlib import Path
 from typing import Dict, List
 
+from hidprompt.extractors.html_extractor import extract_html
 from hidprompt.extractors.text_extractor import extract_text
 from hidprompt.renderers.json_renderer import render as render_json
 from hidprompt.renderers.markdown_renderer import render as render_markdown
 from hidprompt.schema import counts_from_findings, now_timestamp
 from hidprompt.scanners.encoded_blob_scanner import scan as scan_encoded
+from hidprompt.scanners.hidden_html_scanner import scan as scan_hidden_html
 from hidprompt.scanners.injection_phrase_scanner import scan as scan_injection
 from hidprompt.scanners.unicode_obfuscation_scanner import scan as scan_unicode
 from hidprompt.scoring import score_findings
 
-SUPPORTED_SUFFIXES = {".txt", ".md"}
+SUPPORTED_SUFFIXES = {".txt", ".md", ".html", ".htm"}
 
 
 def run_scan(path: Path, output_dir: Path, output_format: str) -> Dict[str, object]:
@@ -22,11 +24,17 @@ def run_scan(path: Path, output_dir: Path, output_format: str) -> Dict[str, obje
     if path.suffix.lower() not in SUPPORTED_SUFFIXES:
         raise ValueError(f"Unsupported file type: {path.suffix}")
 
-    extracted = extract_text(path)
+    suffix = path.suffix.lower()
+    if suffix in {".html", ".htm"}:
+        extracted = extract_html(path)
+    else:
+        extracted = extract_text(path)
     findings: List[Dict[str, object]] = []
     findings.extend(scan_injection(extracted.text, extracted.offsets))
     findings.extend(scan_unicode(extracted.text, extracted.offsets))
     findings.extend(scan_encoded(extracted.text, extracted.offsets))
+    if extracted.raw_html:
+        findings.extend(scan_hidden_html(extracted.raw_html))
 
     risk_score, risk_level = score_findings(findings)
     summary = counts_from_findings(findings)

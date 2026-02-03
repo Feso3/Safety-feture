@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional
 
 from hidprompt.utils.hashing import sha256_file
 from hidprompt.utils.normalization import normalize_text
@@ -12,6 +12,7 @@ class ExtractedContent:
     text: str
     offsets: OffsetMap
     metadata: Dict[str, str]
+    raw_html: Optional[str] = None
 
 
 def extract_text(path: Path) -> ExtractedContent:

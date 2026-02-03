@@ -45,6 +45,7 @@ Supported Inputs (Phased)
 	•	.md
 	•	Phase 2:
 	•	.html
+	•	.htm
 	•	Phase 3:
 	•	.pdf
 	•	Phase 4:
