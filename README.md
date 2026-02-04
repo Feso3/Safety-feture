@@ -35,9 +35,7 @@ CLI Interface
 	•	Optional flags:
 	•	--format json|md|both
 	•	--out <directory>
-	•	--policy <policy.yaml>
 	•	--quiet
-	•	--verbose
 
 Supported Inputs (Phased)
 	•	Phase 1:
@@ -47,9 +45,9 @@ Supported Inputs (Phased)
 	•	.html
 	•	.htm
 	•	Phase 3:
-	•	.pdf
+	•	.pdf (planned)
 	•	Phase 4:
-	•	scan-url (HTTP fetch + HTML extraction)
+	•	scan-url (HTTP fetch + HTML extraction, planned)
 
 Output Artifacts
 	•	report.json — canonical machine-readable output
@@ -210,12 +208,10 @@ hidprompt/
 ├── pipeline.py
 ├── schema.py
 ├── scoring.py
-├── config.py
 │
 ├── extractors/
 │   ├── text_extractor.py
 │   ├── html_extractor.py
-│   └── pdf_extractor.py
 │
 ├── scanners/
 │   ├── injection_phrase_scanner.py
@@ -233,17 +229,9 @@ hidprompt/
 │   └── normalization.py
 │
 ├── tests/
+│   ├── conftest.py
 │   ├── test_pipeline.py
-│   ├── test_scanners.py
-│   └── test_renderers.py
-│
-├── corpus/
-│   ├── clean/
-│   ├── malicious/
-│   └── edge_cases/
-│
-├── docs/
-│   └── SPEC.md
+│   └── test_scanners.py
 │
 ├── README.md
 └── pyproject.toml
